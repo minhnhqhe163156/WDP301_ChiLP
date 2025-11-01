@@ -1,0 +1,11 @@
+@media (max-width: 600px) {
+  .recent-order-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left;
+    gap: 8px;
+  }
+  .recent-order-item img {
+    margin-bottom: 8px;
+  }
+} 
