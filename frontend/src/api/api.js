@@ -155,7 +155,6 @@ export const reviewAPI = {
 
 export const userAPI = {
   updateProfile: (data) => api.put("/auth/update-profile", data),
-  changePassword: (data) => api.post("/auth/change-password", data), // thêm API đổi mật khẩu
   getLoginHistory: () => api.get("/auth/login-history"),
 };
 
