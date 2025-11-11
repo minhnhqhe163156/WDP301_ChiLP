@@ -33,12 +33,10 @@ const authController = {
         return res.status(400).json({ message: "Email already registered" });
       }
 
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
       // Create new user
       const newUser = new User({
         email,
-        password: hashedPassword,
+        password: password,
         name,
         role,
         is_active: true,
