@@ -14,7 +14,7 @@ const createUploadMiddleware = (folderPath = 'messages', maxCount = 5) => {
         const customFolder = req.body.customFolder || 'general';
         return `${folderPath}/${customFolder}`;
       },
-      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'gif',],
       transformation: [
         { width: 1200, crop: 'limit' },
         { quality: 'auto', fetch_format: 'auto' }
