@@ -14,7 +14,7 @@ const createUploadMiddleware = (folderPath = 'messages', maxCount = 5) => {
         const customFolder = req.body.customFolder || 'general';
         return `${folderPath}/${customFolder}`;
       },
-      allowed_formats: ['jpg', 'jpeg', 'png', 'gif',],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
       transformation: [
         { width: 1200, crop: 'limit' },
         { quality: 'auto', fetch_format: 'auto' }
@@ -22,8 +22,7 @@ const createUploadMiddleware = (folderPath = 'messages', maxCount = 5) => {
       // Add custom public_id for better organization
       public_id: (req, file) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const fileNameWithoutExt = file.originalname.split('.')[0]
-          .replace(/[^a-zA-Z0-9]/g, '_'); // sanitize filename
+        
         return `${fileNameWithoutExt}-${uniqueSuffix}`;
       }
     }
