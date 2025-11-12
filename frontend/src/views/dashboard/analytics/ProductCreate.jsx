@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../../api/productApi";
 import { getAllCategories } from "../../../api/categoryApi";
 import { toast } from "react-toastify";
+import { BarChart2, Briefcase, PlusCircle, Truck, Users } from "lucide-react";
 
 const brands = ["Nike", "Adidas", "Puma", "Gucci", "H&M", "Zara", "Other"];
 
@@ -131,140 +132,175 @@ const ProductCreate = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Thêm sản phẩm mới</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <InputField
-          label="Tên sản phẩm *"
-          name="product_name"
-          value={formData.product_name}
-          onChange={handleChange}
-          error={errors.product_name}
-        />
-        <InputField
-          label="Giá (VNĐ) *"
-          name="price"
-          type="number"
-          value={formData.price}
-          onChange={handleChange}
-          error={errors.price}
-        />
-        <InputField
-          label="Số lượng *"
-          name="quantity"
-          type="number"
-          value={formData.quantity}
-          onChange={handleChange}
-          error={errors.quantity}
-        />
-        {/* Brand select */}
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Thương hiệu *
-          </label>
-          <select
-            name="brand"
-            value={formData.brand}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
+    <div className="flex min-h-screen">
+      <aside className="w-64 bg-gradient-to-b from-indigo-600 to-purple-600 text-white min-h-screen p-6">
+        <div className="flex items-center gap-2 mb-8">
+          <Briefcase size={24} />
+          <span className="font-bold text-lg">Bảng điều khiển</span>
+        </div>
+        <nav className="flex flex-col gap-4">
+          <button
+            onClick={() => navigate("/seller/analytics")}
+            className="flex items-center gap-2 hover:underline"
           >
-            <option value="">-- Chọn thương hiệu --</option>
-            {brands.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
-          {errors.brand && (
-            <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
-          )}
-        </div>
-        {/* Category select */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Danh mục *</label>
-          <select
-            name="category_id"
-            value={formData.category_id}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
+            <BarChart2 size={20} /> Phân Tích cửa hàng
+          </button>
+          <button
+            onClick={() => navigate("/seller/order-management")}
+            className="flex items-center gap-2 hover:underline"
           >
-            <option value="">-- Chọn danh mục --</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-          {errors.category_id && (
-            <p className="text-red-500 text-sm mt-1">{errors.category_id}</p>
-          )}
-        </div>
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Mô tả</label>
-          <textarea
-            name="description"
-            value={formData.description}
+            <Truck size={20} /> Quản Lí Đơn hàng
+          </button>
+          <button
+            onClick={() => navigate("/seller/reviews")}
+            className="flex items-center gap-2 hover:underline"
+          >
+            <Users size={20} /> Quản Lí Feedback
+          </button>
+          <button
+            onClick={() => navigate("/seller/products")}
+            className="flex items-center gap-2 font-semibold underline"
+          >
+            <PlusCircle size={20} /> Quản Lí Sản Phẩm
+          </button>
+        </nav>
+      </aside>
+
+      <div className="max-w-2xl mx-auto p-6 bg-white rounded shadow">
+        <h2 className="text-xl font-bold mb-4">Thêm sản phẩm mới</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <InputField
+            label="Tên sản phẩm *"
+            name="product_name"
+            value={formData.product_name}
             onChange={handleChange}
-            rows={4}
-            className="w-full border px-3 py-2 rounded"
-            maxLength={500}
+            error={errors.product_name}
           />
-          {errors.description && (
-            <p className="text-red-500 text-sm mt-1">{errors.description}</p>
-          )}
-        </div>
-        {/* Drag & Drop */}
-        <div
-          onDrop={handleDrop}
-          onDragOver={(e) => e.preventDefault()}
-          className={`w-full border-2 border-dashed px-4 py-6 text-center rounded hover:bg-gray-50 ${errors.images ? "border-red-400 text-red-500" : "border-gray-300 text-gray-500"}`}
-        >
-          <p>Kéo thả ảnh vào đây hoặc</p>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
-            className="mt-2"
+          <InputField
+            label="Giá (VNĐ) *"
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleChange}
+            error={errors.price}
           />
-          {errors.images && (
-            <p className="text-red-500 text-sm mt-1">{errors.images}</p>
-          )}
-        </div>
-        {/* Preview images */}
-        {imagePreview.length > 0 && (
-          <div className="flex flex-wrap gap-3 mt-3">
-            {imagePreview.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                alt={`preview-${idx}`}
-                className="w-24 h-24 object-cover border rounded"
-              />
-            ))}
+          <InputField
+            label="Số lượng *"
+            name="quantity"
+            type="number"
+            value={formData.quantity}
+            onChange={handleChange}
+            error={errors.quantity}
+          />
+          {/* Brand select */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Thương hiệu *
+            </label>
+            <select
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+              required
+            >
+              <option value="">-- Chọn thương hiệu --</option>
+              {brands.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </select>
+            {errors.brand && (
+              <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+            )}
           </div>
-        )}
-        {/* Actions */}
-        <div className="flex justify-end gap-2 mt-6">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+          {/* Category select */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Danh mục *</label>
+            <select
+              name="category_id"
+              value={formData.category_id}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+              required
+            >
+              <option value="">-- Chọn danh mục --</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            {errors.category_id && (
+              <p className="text-red-500 text-sm mt-1">{errors.category_id}</p>
+            )}
+          </div>
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Mô tả</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              className="w-full border px-3 py-2 rounded"
+              maxLength={500}
+            />
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+            )}
+          </div>
+          {/* Drag & Drop */}
+          <div
+            onDrop={handleDrop}
+            onDragOver={(e) => e.preventDefault()}
+            className={`w-full border-2 border-dashed px-4 py-6 text-center rounded hover:bg-gray-50 ${errors.images ? "border-red-400 text-red-500" : "border-gray-300 text-gray-500"}`}
           >
-            Hủy
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            disabled={Object.values(errors).some((err) => err)}
-          >
-            Thêm sản phẩm
-          </button>
-        </div>
-      </form>
+            <p>Kéo thả ảnh vào đây hoặc</p>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="mt-2"
+            />
+            {errors.images && (
+              <p className="text-red-500 text-sm mt-1">{errors.images}</p>
+            )}
+          </div>
+          {/* Preview images */}
+          {imagePreview.length > 0 && (
+            <div className="flex flex-wrap gap-3 mt-3">
+              {imagePreview.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`preview-${idx}`}
+                  className="w-24 h-24 object-cover border rounded"
+                />
+              ))}
+            </div>
+          )}
+          {/* Actions */}
+          <div className="flex justify-end gap-2 mt-6">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            >
+              Hủy
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              disabled={Object.values(errors).some((err) => err)}
+            >
+              Thêm sản phẩm
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
