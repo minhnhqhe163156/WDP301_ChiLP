@@ -13,6 +13,8 @@ exports.createBlog = async (req, res) => {
       category,
       tags,
       status: status || 'published',
+      featured_image: req.file?.path, // Lưu link ảnh cloudinary
+      user_id: req.user._id,
     };
     const blog = new Blog(blogData);
     await blog.save();
