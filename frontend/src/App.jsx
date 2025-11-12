@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css"
+import "./App.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -38,13 +38,15 @@ import GuidePage from "./components/GuidePage";
 // import AddProduct from "./views/dashboard/analytics/AddProduct";
 import ProductDetailSeller from "./views/dashboard/analytics/ProductDetailSeller";
 import ProductEdit from "./views/dashboard/analytics/ProductEdit";
+import ProductCreate from "./views/dashboard/analytics/ProductCreate";
+import ProductCategory from "./views/dashboard/analytics/ProductCategory";
 // import SellerCategoryManager from "./views/dashboard/analytics/SellerCategoryManager";
 
 const AppRoutes = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // Don't show header on login/register page 
+  // Don't show header on login/register page
   const showHeader = !location.pathname.includes("loginandregister");
 
   if (loading) {
@@ -187,6 +189,24 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["seller"]}>
               <SellerProducts />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/seller/categories"
+          element={
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <ProductCategory />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/seller/products/new"
+          element={
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <ProductCreate />
             </ProtectedRoute>
           }
         />
